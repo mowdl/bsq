@@ -6,7 +6,7 @@
 /*   By: mel-meka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 08:45:56 by mel-meka          #+#    #+#             */
-/*   Updated: 2023/10/04 17:30:00 by mel-meka         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:21:37 by mel-meka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 
 int	is_valid(t_map *map)
 {
+	if (map->empty < ' ' || map->empty == 127)
+		return (0);
+	if (map->obstacle < ' ' || map->obstacle == 127)
+		return (0);
+	if (map->full < ' ' || map->full == 127)
+		return (0);
 	if (map->empty == map->obstacle || map->empty == map->full)
 		return (0);
 	if (map->obstacle == map->full)
