@@ -6,7 +6,7 @@
 /*   By: mel-meka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 04:10:58 by mel-meka          #+#    #+#             */
-/*   Updated: 2023/10/04 14:54:21 by mel-meka         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:02:31 by mel-meka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,10 @@ void	ft_strncpy(char *dest, char *src, int n);
 char	*double_size(char *buffer, int size);
 
 void	reset_map(t_map *map);
+void	set_map(t_map *map);
+int		load_file_header(int fd, t_map *map);
+
+int		is_numeric(char c);
+int		min3(int a, int b, int c);
 
 #endif

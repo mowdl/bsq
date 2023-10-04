@@ -6,7 +6,7 @@
 /*   By: mel-meka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 08:45:56 by mel-meka          #+#    #+#             */
-/*   Updated: 2023/10/04 14:57:53 by mel-meka         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:30:00 by mel-meka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	char_to_val(t_map *map, char c)
 
 void	set_biggest_square(t_map *map, int i, int j)
 {
-	int cur_size;
+	int	cur_size;
 
-	cur_size = map->lines[j][i]; 
+	cur_size = map->lines[j][i];
 	if (map->biggest_square.size < cur_size)
 	{
 		map->biggest_square.x = i - (cur_size - 1);
@@ -67,22 +67,4 @@ char	*double_size(char *buffer, int size)
 	ft_strncpy(tmp, buffer, size);
 	free(buffer);
 	return (tmp);
-}
-
-void	reset_map(t_map *map)
-{
-	int j;
-
-	j = 0;
-	while (j < map->lines_len)
-	{
-		free(map->lines[j]);
-		j++;
-	}
-	free(map->lines);
-	map->lines_len = 0;
-	map->line_len = 0;
-	map->biggest_square.size = 0;
-	map->biggest_square.x = -1;
-	map->biggest_square.y = -1;
 }

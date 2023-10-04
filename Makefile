@@ -6,7 +6,7 @@
 #    By: mel-meka <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 18:52:03 by mel-meka          #+#    #+#              #
-#    Updated: 2023/10/04 08:56:14 by mel-meka         ###   ########.fr        #
+#    Updated: 2023/10/04 17:28:09 by mel-meka         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ MY_SOURCES = srcs/main.c \
 			 srcs/map.c \
 			 srcs/utils.c \
 			 srcs/map_utils.c \
-			 srcs/map_print.c
+			 srcs/map_print.c \
+			 srcs/map_utils2.c
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 

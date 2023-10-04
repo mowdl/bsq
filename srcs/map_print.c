@@ -6,7 +6,7 @@
 /*   By: mel-meka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 05:28:40 by mel-meka          #+#    #+#             */
-/*   Updated: 2023/10/04 11:16:08 by mel-meka         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:34:41 by mel-meka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ char	val_to_char(t_map *map, int v)
 int	is_in_square(t_map *map, int i, int j)
 {
 	int	r;
-	int x;
-	int y;
-	int size;
+	int	x;
+	int	y;
+	int	size;
 
 	x = map->biggest_square.x;
 	y = map->biggest_square.y;
 	size = map->biggest_square.size;
-
 	r = (i >= x && i < x + size);
-	r = r && (j >= y && j < y + size);
+	r = (r && (j >= y && j < y + size));
 	return (r);
 }
 
 void	map_print(t_map *map)
 {
-	int i;
-	int j;
-	int **lines;
+	int	i;
+	int	j;
+	int	**lines;
+
 	lines = map->lines;
 	j = 0;
 	while (j < map->lines_len)

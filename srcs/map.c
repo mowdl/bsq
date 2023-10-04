@@ -6,7 +6,7 @@
 /*   By: mel-meka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 04:23:34 by mel-meka          #+#    #+#             */
-/*   Updated: 2023/10/04 14:36:24 by mel-meka         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:01:38 by mel-meka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,20 @@
 #include<stdlib.h>
 #include <fcntl.h>
 
+int	calc_cell(t_map *map, int i, int j)
+{
+	return (min3(
+			map->lines[j][i - 1],
+		map->lines[j - 1][i],
+		map->lines[j - 1][i - 1]) + 1);
+}
+
 int	load_line(char *buffer, t_map *map, int j)
 {
-	int i;
-	int r;
-	int	*cur_line;
+	int	i;
+	int	r;
 
 	map->lines[j] = malloc(sizeof(int) * map->line_len);
-	cur_line = map->lines[j];
 	i = 0;
 	while (i < map->line_len)
 	{
@@ -33,12 +39,12 @@ int	load_line(char *buffer, t_map *map, int j)
 			return (0);
 		if (i == 0 || j == 0 || r == 0)
 		{
-			cur_line[i] = r;
+			map->lines[j][i] = r;
 			set_biggest_square(map, i, j);
 		}
 		else
 		{
-			cur_line[i] = min3(cur_line[i-1], map->lines[j-1][i], map->lines[j-1][i-1]) + 1;
+			map->lines[j][i] = calc_cell(map, i, j);
 			set_biggest_square(map, i, j);
 		}
 		i++;
@@ -50,10 +56,10 @@ int	load_line(char *buffer, t_map *map, int j)
 
 int	read_first_line(int fd, char **buffer)
 {
-	char b;
-	int b_read;
-	int i;
-	int buf_len;
+	char	b;
+	int		b_read;
+	int		i;
+	int		buf_len;
 
 	i = 0;
 	buf_len = 128;
@@ -72,7 +78,7 @@ int	read_first_line(int fd, char **buffer)
 		b_read = read(fd, &b, 1);
 		i++;
 	}
-	if (b_read == 0) // didnt break because of \n
+	if (b_read == 0)
 		return (0);
 	return (i);
 }
@@ -96,6 +102,7 @@ int	load_lines(int fd, t_map *map)
 		b_read = read(fd, buffer, (len + 1));
 		i++;
 	}
+	free(buffer);
 	if (b_read != 0)
 		return (0);
 	return (1);
@@ -103,33 +110,15 @@ int	load_lines(int fd, t_map *map)
 
 int	load_map(char *path, t_map *map)
 {
-	char	b;
-	int		b_read;
 	int		fd;
-	
+
 	if (path == 0)
 		fd = 0;
 	else
 		fd = open(path, O_RDWR);
 	if (fd == -1)
 		return (0);
-	b_read = read(fd, &b, 1);
-	if (b_read <= 0)
-		return (0);
-	while (b_read && is_numeric(b))
-	{
-		map->lines_len = map->lines_len * 10 + (b - '0');
-		b_read = read(fd, &b, 1);
-	}
-	map->empty = b;
-	b_read = read(fd, &b, 1);
-	map->obstacle = b;
-	b_read = read(fd, &b, 1);
-	map->full = b;
-	b_read = read(fd, &b, 1);
-	if (b != '\n' || !is_valid(map))
-		return (0);
-	map->lines = malloc(sizeof(int *) * map->lines_len);
+	load_file_header(fd, map);
 	if (load_lines(fd, map))
 	{
 		close(fd);
