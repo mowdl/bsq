@@ -1,0 +1,3 @@
+srcs/*.o
+bsq
+compile_commands.json
